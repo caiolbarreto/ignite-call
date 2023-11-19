@@ -13,9 +13,8 @@ const config: Config = {
       },
 
       colors: {
-        mainColor: '#E1E1E6'
-      }
-
+        mainColor: '#E1E1E6',
+      },
     },
   },
   plugins: [],
