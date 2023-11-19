@@ -1,5 +1,9 @@
+'use client'
+
+import { Heading } from '@ignite-ui/react'
+
 export default function Home() {
   return (
-    <h1>hello world</h1>
+    <Heading>hello world</Heading>
   )
 }
