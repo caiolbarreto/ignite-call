@@ -1,21 +1,9 @@
 'use client'
 
-import { styled, Heading, Text } from '@ignite-ui/react'
-
 import appPreview from '@/assets/app-preview.png'
 import Image from 'next/image'
-import { ClaimUsernameForm } from './components'
-
-const StyledHeading = styled(Heading, {
-  '@media(max-width: 600px)': {
-    fontSize: '$6xl',
-  },
-})
-
-const StyledText = styled(Text, {
-  maskType: '$2',
-  color: '$gray200',
-})
+import { ClaimUsernameForm } from './components/ClaimUsernameForm'
+import { StyledHeading, StyledText } from './styles'
 
 export default function Home() {
   return (

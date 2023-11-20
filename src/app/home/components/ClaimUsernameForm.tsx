@@ -1,24 +1,10 @@
-import { styled, Button, TextInput, Box, Text } from '@ignite-ui/react'
+import { Button, TextInput } from '@ignite-ui/react'
 import { ArrowRight } from 'phosphor-react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-
-const StyledForm = styled(Box, {
-  display: 'grid',
-  gridTemplateColumns: '1fr auto',
-  gap: '$2',
-  marginTop: '$4',
-  padding: '$4',
-
-  '@media(max-width: 600px)': {
-    gridTemplateColumns: '1fr',
-  },
-})
-
-const StyledTextFormAnnotation = styled(Text, {
-  color: '$gray400',
-})
+import { StyledForm, StyledTextFormAnnotation } from './styles'
+import { useRouter } from 'next/navigation'
 
 const claimUsernameFormSchema = z.object({
   username: z
@@ -34,13 +20,17 @@ export function ClaimUsernameForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<ClaimUsernameFormData>({
     resolver: zodResolver(claimUsernameFormSchema),
   })
 
+  const router = useRouter()
+
   async function handleClaimUsername(data: ClaimUsernameFormData) {
-    console.log(data)
+    const { username } = data
+
+    await router.push(`register/?username=${username}`)
   }
 
   return (
@@ -52,7 +42,7 @@ export function ClaimUsernameForm() {
           placeholder="your-user"
           {...register('username')}
         />
-        <Button size="sm" type="submit">
+        <Button size="sm" type="submit" disabled={isSubmitting}>
           Schedule
           <ArrowRight />
         </Button>
