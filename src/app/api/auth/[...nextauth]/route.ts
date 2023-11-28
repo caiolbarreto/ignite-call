@@ -21,7 +21,6 @@ const handler = NextAuth({
       ) {
         return '/register/connect-calendar/?error=permissions'
       }
-
       return true
     },
   },
