@@ -1,7 +1,10 @@
+import { PrismaAdapter } from '@/lib/auth/prisma-adapter'
 import NextAuth from 'next-auth/next'
 import GoogleProvider from 'next-auth/providers/google'
 
 const handler = NextAuth({
+  adapter: PrismaAdapter(),
+
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID ?? '',
@@ -21,6 +24,7 @@ const handler = NextAuth({
       ) {
         return '/register/connect-calendar/?error=permissions'
       }
+
       return true
     },
   },
