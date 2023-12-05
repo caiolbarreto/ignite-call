@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = "postgresql://postgres:docker@localhost:5432/ignite-call"
 }
 
 model User {

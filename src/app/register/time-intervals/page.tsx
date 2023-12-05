@@ -86,7 +86,9 @@ export default function TimeIntervals() {
   async function handleSetTimeIntervals(data: unknown) {
     const { intervals } = data as TimeIntervalsFormOutput
 
-    await api.get('/users/time-intervals')
+    await api.post('/users/time-intervals', {
+      intervals,
+    })
   }
 
   useEffect(() => {
