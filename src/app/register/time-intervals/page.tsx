@@ -10,6 +10,7 @@ import { getWeekDays } from '@/utils/get-week-days'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect } from 'react'
 import { convertTimeStringToMinutes } from '@/app/utils/convert-time-string-to-minutes'
+import { api } from '@/lib/axios'
 
 const timeIntervalsFormSchema = z.object({
   intervals: z
@@ -82,8 +83,10 @@ export default function TimeIntervals() {
     name: 'intervals',
   })
 
-  async function handleSetTimeIntervals(data: TimeIntervalsFormOutput) {
-    console.log(data)
+  async function handleSetTimeIntervals(data: unknown) {
+    const { intervals } = data as TimeIntervalsFormOutput
+
+    await api.get('/users/time-intervals')
   }
 
   useEffect(() => {
