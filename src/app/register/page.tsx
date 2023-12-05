@@ -20,7 +20,7 @@ const registerFormSchema = z.object({
   name: z.string().min(3, { message: 'At least 3 characters long' }),
 })
 
-type RegisterFromData = z.infer<typeof registerFormSchema>
+type RegisterFormData = z.infer<typeof registerFormSchema>
 
 export default function Register() {
   const {
@@ -28,7 +28,7 @@ export default function Register() {
     handleSubmit,
     setValue,
     formState: { errors, isSubmitting },
-  } = useForm<RegisterFromData>({
+  } = useForm<RegisterFormData>({
     resolver: zodResolver(registerFormSchema),
   })
 
@@ -40,7 +40,7 @@ export default function Register() {
     setValue('username', String(username))
   }, [username, setValue])
 
-  async function handleRegister(data: RegisterFromData) {
+  async function handleRegister(data: RegisterFormData) {
     try {
       await api.post('/users', {
         name: data.name,
