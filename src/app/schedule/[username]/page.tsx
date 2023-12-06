@@ -3,6 +3,7 @@
 import { Avatar } from '@ignite-ui/react'
 import { StyledHeading, StyledText } from './styles'
 import { useSession } from 'next-auth/react'
+import { ScheduleForm } from './ScheduleForm'
 
 export default function Schedule() {
   const session = useSession()
@@ -14,6 +15,8 @@ export default function Schedule() {
         <StyledHeading>{session.data?.user.name}</StyledHeading>
         <StyledText>{session.data?.user.bio}</StyledText>
       </div>
+
+      <ScheduleForm />
     </div>
   )
 }
