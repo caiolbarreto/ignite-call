@@ -10,6 +10,8 @@ const config: Config = {
     extend: {
       backgroundColor: {
         background: '#121214',
+        gray600: '#323238',
+        gray500: '#505059',
       },
 
       colors: {
@@ -17,6 +19,7 @@ const config: Config = {
         gray200: '#A9A9B2',
         gray400: '#7C7C8A',
         gray600: '#323238',
+        gray800: '#202024',
       },
     },
   },
