@@ -3,7 +3,7 @@
 import { Avatar } from '@ignite-ui/react'
 import { StyledHeading, StyledText } from './styles'
 import { useSession } from 'next-auth/react'
-import { ScheduleForm } from './ScheduleForm'
+import { ScheduleForm } from './schedule-form'
 
 export default function Schedule() {
   const session = useSession()
