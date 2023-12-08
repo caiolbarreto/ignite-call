@@ -8,7 +8,7 @@ const buttonStyles = twMerge(
 )
 
 export function CalendarStep() {
-  const isTimePickerOpen = true
+  const isTimePickerOpen = false
 
   return (
     <Container isTimePickerOpen={isTimePickerOpen}>
