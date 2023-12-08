@@ -1,6 +1,7 @@
 import { Calendar } from '@/components/Calendar'
 import { Container, TimePickerHeader } from './styles'
 import { twMerge } from 'tailwind-merge'
+import { useState } from 'react'
 
 const buttonStyles = twMerge(
   'border-none bg-gray600 py-3 cursor-pointer text-gray100 rounded-md text-sm leading-3',
@@ -8,11 +9,12 @@ const buttonStyles = twMerge(
 )
 
 export function CalendarStep() {
-  const isTimePickerOpen = false
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null)
+  const isTimePickerOpen = !!selectedDate
 
   return (
     <Container isTimePickerOpen={isTimePickerOpen}>
-      <Calendar />
+      <Calendar selectedDate={selectedDate} onSelectDate={setSelectedDate} />
       {isTimePickerOpen && (
         <div className="border-l border-l-gray600 px-6 pt-6 overflow-y-scroll absolute top-0 bottom-0 right-0 w-[280px]">
           <TimePickerHeader>
