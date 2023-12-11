@@ -4,6 +4,8 @@ import type { Metadata } from 'next'
 import { Roboto } from 'next/font/google'
 import './globals.css'
 import Provider from './utils/SessionProvider'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { queryClient } from '@/lib/react-query'
 
 const roboto = Roboto({
   weight: ['400', '500', '700'],

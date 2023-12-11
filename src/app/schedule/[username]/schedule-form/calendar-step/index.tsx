@@ -1,10 +1,11 @@
 import { Calendar } from '@/components/Calendar'
 import { Container, TimePickerHeader } from './styles'
 import { twMerge } from 'tailwind-merge'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import dayjs from 'dayjs'
 import { api } from '@/lib/axios'
 import { useSession } from 'next-auth/react'
+import { useQuery } from '@tanstack/react-query'
 
 const buttonStyles = twMerge(
   'border-none bg-gray600 py-3 cursor-pointer text-gray100 rounded-md text-sm leading-3',
@@ -18,7 +19,7 @@ interface Availability {
 
 export function CalendarStep() {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null)
-  const [availability, setAvailability] = useState<Availability | null>(null)
+  // const [availability, setAvailability] = useState<Availability | null>(null)
 
   const session = useSession()
   const username = session.data?.user.username
@@ -28,21 +29,20 @@ export function CalendarStep() {
   const weekDay = selectedDate && dayjs(selectedDate).format('dddd')
   const dayAndMonth = selectedDate && dayjs(selectedDate).format('MMMM[ ]DD')
 
-  useEffect(() => {
-    if (!selectedDate) {
-      return
-    }
+  const selectedDateWithoutTime =
+    selectedDate && dayjs(selectedDate).format('YYYY-MM-DD')
 
-    api
-      .get(`/users/${username}/availability`, {
+  const { data: availability } = useQuery<Availability>({
+    queryKey: ['availability', selectedDateWithoutTime],
+    queryFn: async () => {
+      const response = await api.get(`/users/${username}/availability`, {
         params: {
-          date: dayjs(selectedDate).format('YYYY-MM-DD'),
+          date: selectedDateWithoutTime,
         },
       })
-      .then((response) => {
-        setAvailability(response.data)
-      })
-  }, [selectedDate, username])
+      return response.data
+    },
+  })
 
   return (
     <Container isTimePickerOpen={isTimePickerOpen}>
