@@ -93,10 +93,6 @@ export default function TimeIntervals() {
     await router.push('/register/update-profile')
   }
 
-  useEffect(() => {
-    console.log('errors', errors)
-  }, [errors])
-
   return (
     <main className="max-w-[572px] mx-auto mt-20 mb-4">
       <div className="px-6">
