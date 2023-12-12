@@ -4,8 +4,8 @@ import { twMerge } from 'tailwind-merge'
 import { useState } from 'react'
 import dayjs from 'dayjs'
 import { api } from '@/lib/axios'
-import { useSession } from 'next-auth/react'
 import { useQuery } from '@tanstack/react-query'
+import { useParams } from 'next/navigation'
 
 const buttonStyles = twMerge(
   'border-none bg-gray600 py-3 cursor-pointer text-gray100 rounded-md text-sm leading-3',
@@ -19,10 +19,8 @@ interface Availability {
 
 export function CalendarStep() {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null)
-  // const [availability, setAvailability] = useState<Availability | null>(null)
 
-  const session = useSession()
-  const username = session.data?.user.username
+  const { username } = useParams()
 
   const isTimePickerOpen = !!selectedDate
 
