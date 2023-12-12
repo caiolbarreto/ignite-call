@@ -63,7 +63,7 @@ export async function GET(req: NextRequest, { params }: ParamsProps) {
     HAVING amount >= size
   `
 
-  const blackedDates = blockedDatesRaw.map((item) => item.date)
+  const blockedDates = blockedDatesRaw.map((item) => item.date)
 
-  return NextResponse.json({ blockedWeekDays, blackedDates })
+  return NextResponse.json({ blockedWeekDays, blockedDates })
 }
