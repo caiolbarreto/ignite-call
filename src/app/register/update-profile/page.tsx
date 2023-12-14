@@ -10,6 +10,7 @@ import { StyledHeading, StyledText } from '../styles'
 import { useSession } from 'next-auth/react'
 import { api } from '@/lib/axios'
 import { useRouter } from 'next/navigation'
+import { NextSeo } from 'next-seo'
 
 const updateProfileSchema = z.object({
   bio: z.string(),
@@ -38,40 +39,44 @@ export default function Register() {
   }
 
   return (
-    <main className="max-w-[572px] mx-auto mt-20 mb-4">
-      <div className="px-6">
-        <StyledHeading as="strong">Welcome to Ignite Call!</StyledHeading>
-        <StyledText>
-          We need some information to create your profile! Oh, you can edit
-          those info later
-        </StyledText>
+    <>
+      <NextSeo title="Update your profile | Ignite Call" noindex />
 
-        <MultiStep size={4} currentStep={1} />
-      </div>
+      <main className="max-w-[572px] mx-auto mt-20 mb-4">
+        <div className="px-6">
+          <StyledHeading as="strong">Welcome to Ignite Call!</StyledHeading>
+          <StyledText>
+            We need some information to create your profile! Oh, you can edit
+            those info later
+          </StyledText>
 
-      <ProfileBox as="form" onSubmit={handleSubmit(handleUpdateProfile)}>
-        <label>
-          <Text size="sm">Profile picture</Text>
-          <Avatar
-            src={session.data?.user.avatar_url}
-            alt={session.data?.user.name}
-          />
-        </label>
+          <MultiStep size={4} currentStep={1} />
+        </div>
 
-        <label>
-          <Text size="sm">About you</Text>
-          <TextArea placeholder="Your name" {...register('bio')} />
-          <FormAnnotation size="sm">
-            Tell us a bit about yourself. this will be displayed on your
-            personal page
-          </FormAnnotation>
-        </label>
+        <ProfileBox as="form" onSubmit={handleSubmit(handleUpdateProfile)}>
+          <label>
+            <Text size="sm">Profile picture</Text>
+            <Avatar
+              src={session.data?.user.avatar_url}
+              alt={session.data?.user.name}
+            />
+          </label>
 
-        <Button type="submit" disabled={isSubmitting}>
-          Finish
-          <ArrowRight />
-        </Button>
-      </ProfileBox>
-    </main>
+          <label>
+            <Text size="sm">About you</Text>
+            <TextArea placeholder="Your name" {...register('bio')} />
+            <FormAnnotation size="sm">
+              Tell us a bit about yourself. this will be displayed on your
+              personal page
+            </FormAnnotation>
+          </label>
+
+          <Button type="submit" disabled={isSubmitting}>
+            Finish
+            <ArrowRight />
+          </Button>
+        </ProfileBox>
+      </main>
+    </>
   )
 }

@@ -6,6 +6,7 @@ import { ArrowRight, Check } from 'phosphor-react'
 import { AuthError, ConnectBox } from './styles'
 import { signIn, useSession } from 'next-auth/react'
 import { useRouter, useSearchParams } from 'next/navigation'
+import { NextSeo } from 'next-seo'
 
 export default function ConnectCalendar() {
   const params = useSearchParams()
@@ -24,49 +25,53 @@ export default function ConnectCalendar() {
   }
 
   return (
-    <main className="max-w-[572px] mx-auto mt-20 mb-4">
-      <div className="px-6">
-        <StyledHeading as="strong">Connect your agenda!</StyledHeading>
-        <StyledText>
-          Connect your calendar to automatically check busy times and new events
-          as they are scheduled.
-        </StyledText>
+    <>
+      <NextSeo title="Connect your google calendar | Ignite Call" noindex />
 
-        <MultiStep size={4} currentStep={2} />
-      </div>
+      <main className="max-w-[572px] mx-auto mt-20 mb-4">
+        <div className="px-6">
+          <StyledHeading as="strong">Connect your agenda!</StyledHeading>
+          <StyledText>
+            Connect your calendar to automatically check busy times and new
+            events as they are scheduled.
+          </StyledText>
 
-      <ConnectBox>
-        <div className="flex items-center justify-between border border-gray600 py-4 px-6 rounded-2xl mb-4">
-          <Text>Google calendar</Text>
-          {isSignedIn ? (
-            <Button size="sm" disabled>
-              Connected
-              <Check />
-            </Button>
-          ) : (
-            <Button variant="secondary" onClick={handleConnectCalendar}>
-              Connect
-              <ArrowRight />
-            </Button>
-          )}
+          <MultiStep size={4} currentStep={2} />
         </div>
 
-        {hasAuthError && (
-          <AuthError size="sm">
-            Error connecting to Google, verify if you have enabled the access
-            permissions to Google Calendar
-          </AuthError>
-        )}
+        <ConnectBox>
+          <div className="flex items-center justify-between border border-gray600 py-4 px-6 rounded-2xl mb-4">
+            <Text>Google calendar</Text>
+            {isSignedIn ? (
+              <Button size="sm" disabled>
+                Connected
+                <Check />
+              </Button>
+            ) : (
+              <Button variant="secondary" onClick={handleConnectCalendar}>
+                Connect
+                <ArrowRight />
+              </Button>
+            )}
+          </div>
 
-        <Button
-          type="submit"
-          disabled={!isSignedIn}
-          onClick={handleNavigateToNextStep}
-        >
-          Next step
-          <ArrowRight />
-        </Button>
-      </ConnectBox>
-    </main>
+          {hasAuthError && (
+            <AuthError size="sm">
+              Error connecting to Google, verify if you have enabled the access
+              permissions to Google Calendar
+            </AuthError>
+          )}
+
+          <Button
+            type="submit"
+            disabled={!isSignedIn}
+            onClick={handleNavigateToNextStep}
+          >
+            Next step
+            <ArrowRight />
+          </Button>
+        </ConnectBox>
+      </main>
+    </>
   )
 }

@@ -12,6 +12,7 @@ import { useEffect } from 'react'
 import { convertTimeStringToMinutes } from '@/app/utils/convert-time-string-to-minutes'
 import { api } from '@/lib/axios'
 import { useRouter } from 'next/navigation'
+import { NextSeo } from 'next-seo'
 
 const timeIntervalsFormSchema = z.object({
   intervals: z
@@ -94,72 +95,76 @@ export default function TimeIntervals() {
   }
 
   return (
-    <main className="max-w-[572px] mx-auto mt-20 mb-4">
-      <div className="px-6">
-        <StyledHeading as="strong">Connect your agenda!</StyledHeading>
-        <StyledText>
-          Connect your calendar to automatically check busy times and new events
-          as they are scheduled.
-        </StyledText>
+    <>
+      <NextSeo title="Select your availability | Ignite Call" noindex />
 
-        <MultiStep size={4} currentStep={3} />
-      </div>
+      <main className="max-w-[572px] mx-auto mt-20 mb-4">
+        <div className="px-6">
+          <StyledHeading as="strong">Connect your agenda!</StyledHeading>
+          <StyledText>
+            Connect your calendar to automatically check busy times and new
+            events as they are scheduled.
+          </StyledText>
 
-      <IntervalBox as="form" onSubmit={handleSubmit(handleSetTimeIntervals)}>
-        <div className="border border-gray600 rounded-lg mb-4">
-          {fields.map((field, index) => {
-            return (
-              <div
-                className="flex items-center justify-between py-3 px-4 border-t border-gray600"
-                key={field.id}
-              >
-                <div className="flex items-center gap-3">
-                  <Controller
-                    name={`intervals.${index}.enabled`}
-                    control={control}
-                    render={({ field }) => {
-                      return (
-                        <Checkbox
-                          onCheckedChange={(checked: boolean) => {
-                            field.onChange(checked === true)
-                          }}
-                          checked={field.value}
-                        />
-                      )
-                    }}
-                  />
-                  <Text>{weekDays[field.weekDay]}</Text>
-                </div>
-                <IntervalInput className="flex items-center gap-2">
-                  <TextInput
-                    size="sm"
-                    type="time"
-                    step={60}
-                    {...register(`intervals.${index}.startTime`)}
-                    disabled={!intervals[index].enabled}
-                  />
-                  <TextInput
-                    size="sm"
-                    type="time"
-                    step={60}
-                    {...register(`intervals.${index}.endTime`)}
-                    disabled={!intervals[index].enabled}
-                  />
-                </IntervalInput>
-              </div>
-            )
-          })}
+          <MultiStep size={4} currentStep={3} />
         </div>
 
-        {errors.intervals && (
-          <FormError size="sm">{errors.intervals.root?.message}</FormError>
-        )}
+        <IntervalBox as="form" onSubmit={handleSubmit(handleSetTimeIntervals)}>
+          <div className="border border-gray600 rounded-lg mb-4">
+            {fields.map((field, index) => {
+              return (
+                <div
+                  className="flex items-center justify-between py-3 px-4 border-t border-gray600"
+                  key={field.id}
+                >
+                  <div className="flex items-center gap-3">
+                    <Controller
+                      name={`intervals.${index}.enabled`}
+                      control={control}
+                      render={({ field }) => {
+                        return (
+                          <Checkbox
+                            onCheckedChange={(checked: boolean) => {
+                              field.onChange(checked === true)
+                            }}
+                            checked={field.value}
+                          />
+                        )
+                      }}
+                    />
+                    <Text>{weekDays[field.weekDay]}</Text>
+                  </div>
+                  <IntervalInput className="flex items-center gap-2">
+                    <TextInput
+                      size="sm"
+                      type="time"
+                      step={60}
+                      {...register(`intervals.${index}.startTime`)}
+                      disabled={!intervals[index].enabled}
+                    />
+                    <TextInput
+                      size="sm"
+                      type="time"
+                      step={60}
+                      {...register(`intervals.${index}.endTime`)}
+                      disabled={!intervals[index].enabled}
+                    />
+                  </IntervalInput>
+                </div>
+              )
+            })}
+          </div>
 
-        <Button type="submit" disabled={isSubmitting}>
-          Next step
-          <ArrowRight />
-        </Button>
-      </IntervalBox>
-    </main>
+          {errors.intervals && (
+            <FormError size="sm">{errors.intervals.root?.message}</FormError>
+          )}
+
+          <Button type="submit" disabled={isSubmitting}>
+            Next step
+            <ArrowRight />
+          </Button>
+        </IntervalBox>
+      </main>
+    </>
   )
 }
