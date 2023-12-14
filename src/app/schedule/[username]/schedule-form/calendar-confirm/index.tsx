@@ -1,10 +1,12 @@
 import { CalendarBlank, Clock } from 'phosphor-react'
 import { ConfirmForm, FormError, HeaderText } from './styles'
-import { Button, Text, TextInput } from '@ignite-ui/react'
+import { Button, Text, TextArea, TextInput } from '@ignite-ui/react'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import dayjs from 'dayjs'
+import { api } from '@/lib/axios'
+import { useParams } from 'next/navigation'
 
 const confirmFormSchema = z.object({
   name: z.string().min(3, { message: 'At least 3 characters long' }),
@@ -31,8 +33,19 @@ export function ConfirmStep({
     resolver: zodResolver(confirmFormSchema),
   })
 
-  function handleConfirmScheduling(data: ConfirmFormSchema) {
-    console.log(data)
+  const { username } = useParams()
+
+  async function handleConfirmScheduling(data: ConfirmFormSchema) {
+    const { name, email, notes } = data
+
+    await api.post(`/users/${username}/schedule`, {
+      name,
+      email,
+      notes,
+      date: schedulingDate,
+    })
+
+    onCancelConfirmation()
   }
 
   const describedDate = dayjs(schedulingDate).format('MMMM[ ]DD[ ]YYYY')
@@ -71,7 +84,7 @@ export function ConfirmStep({
 
       <label>
         <Text size="sm">Notes</Text>
-        <TextInput {...register('notes')} />
+        <TextArea {...register('notes')} />
         {errors.notes && (
           <FormError size="sm">{errors.notes.message}</FormError>
         )}
